@@ -8,969 +8,145 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --black: #0a0a0a;
-      --white: #f5f5f0;
-      --red: #e8132a;
-      --blue: #1a3fe4;
-      --gray: #1c1c1c;
-      --mid-gray: #2e2e2e;
-      --light-gray: #888;
-      --sidebar-w: 220px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ── SIDEBAR ── */
-    #sidebar {
-      position: fixed;
-      top: 0; left: 0;
-      width: var(--sidebar-w);
-      height: 100vh;
-      background: var(--gray);
-      border-right: 1px solid #222;
-      display: flex;
-      flex-direction: column;
-      padding: 40px 0;
-      z-index: 100;
-    }
-
-    .sidebar-logo {
-      padding: 0 28px 36px;
-      border-bottom: 1px solid #222;
-    }
-
-    .sidebar-logo .name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      letter-spacing: 2px;
-      line-height: 1;
-      color: var(--white);
-    }
-
-    .sidebar-logo .title {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--light-gray);
-      margin-top: 6px;
-    }
-
-    nav {
-      flex: 1;
-      padding: 28px 0;
-    }
-
-    nav a {
-      display: block;
-      padding: 10px 28px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      color: var(--light-gray);
-      text-decoration: none;
-      transition: color 0.2s, padding-left 0.2s;
-      position: relative;
-    }
-
-    nav a::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 50%;
-      transform: translateY(-50%);
-      width: 3px;
-      height: 0;
-      background: var(--red);
-      transition: height 0.2s;
-    }
-
-    nav a:hover, nav a.active {
-      color: var(--white);
-      padding-left: 36px;
-    }
-
-    nav a:hover::before, nav a.active::before {
-      height: 60%;
-    }
-
-    .sidebar-social {
-      padding: 28px;
-      border-top: 1px solid #222;
-      display: flex;
-      gap: 14px;
-    }
-
-    .sidebar-social a {
-      color: var(--light-gray);
-      text-decoration: none;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      transition: color 0.2s;
-    }
-
-    .sidebar-social a:hover { color: var(--white); }
-
-    /* ── MAIN CONTENT ── */
-    main {
-      margin-left: var(--sidebar-w);
-      min-height: 100vh;
-    }
-
-    section {
-      padding: 100px 80px;
-      border-bottom: 1px solid #1a1a1a;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      color: var(--red);
-      margin-bottom: 16px;
-    }
-
-    h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 6vw, 80px);
-      letter-spacing: 3px;
-      line-height: 0.95;
-      color: var(--white);
-    }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 80px;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid #1a1a1a;
-      opacity: 1;
-      transform: none;
-    }
-
-    #hero::before {
-      content: 'JN';
-      position: absolute;
-      right: -40px; top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(300px, 35vw, 500px);
-      color: #111;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -10px;
-    }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      color: var(--light-gray);
-      margin-bottom: 20px;
-    }
-
-    .hero-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 10vw, 140px);
-      letter-spacing: 4px;
-      line-height: 0.9;
-      margin-bottom: 24px;
-    }
-
-    .hero-name span.red { color: var(--red); }
-    .hero-name span.blue { color: var(--blue); }
-
-    .hero-tagline {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: clamp(18px, 2.5vw, 26px);
-      color: var(--light-gray);
-      max-width: 500px;
-      margin-bottom: 48px;
-      line-height: 1.4;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      text-decoration: none;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-red {
-      background: var(--red);
-      color: var(--white);
-    }
-
-    .btn-red:hover {
-      background: #c0101f;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      border: 1px solid #333;
-    }
-
-    .btn-outline:hover {
-      border-color: var(--white);
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 80px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--light-gray);
-      animation: bounce 2s infinite;
-    }
-
-    .hero-scroll::before {
-      content: '';
-      width: 1px;
-      height: 40px;
-      background: var(--light-gray);
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
-    }
-
-    /* ── ABOUT ── */
-    #about .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin-top: 48px;
-      align-items: start;
-    }
-
-    #about p {
-      font-size: 17px;
-      line-height: 1.8;
-      color: #bbb;
-      margin-bottom: 20px;
-    }
-
-    #about p strong {
-      color: var(--white);
-      font-weight: 500;
-    }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-
-    .stat-box {
-      background: var(--gray);
-      padding: 32px 28px;
-      border: 1px solid #222;
-    }
-
-    .stat-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 52px;
-      letter-spacing: 2px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stat-number.red { color: var(--red); }
-    .stat-number.blue { color: var(--blue); }
-
-    .stat-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--light-gray);
-    }
-
-    /* Skills */
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 32px;
-    }
-
-    .skill-tag {
-      padding: 8px 16px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      border: 1px solid #2a2a2a;
-      color: var(--light-gray);
-      transition: all 0.2s;
-    }
-
-    .skill-tag:hover {
-      border-color: var(--red);
-      color: var(--white);
-    }
-
-    /* ── PROJECTS ── */
-    #projects .projects-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 48px;
-    }
-
-    .filter-tabs {
-      display: flex;
-      gap: 4px;
-    }
-
-    .filter-tab {
-      padding: 8px 18px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      background: none;
-      border: 1px solid #2a2a2a;
-      color: var(--light-gray);
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .filter-tab:hover, .filter-tab.active {
-      background: var(--red);
-      border-color: var(--red);
-      color: var(--white);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 2px;
-    }
-
-    .project-card {
-      background: var(--gray);
-      border: 1px solid #1e1e1e;
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color 0.3s;
-      position: relative;
-    }
-
-    .project-card:hover {
-      border-color: #333;
-    }
-
-    .project-card.hidden {
-      display: none;
-    }
-
-    .project-thumb {
-      width: 100%;
-      aspect-ratio: 16/10;
-      background: var(--mid-gray);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .project-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-      display: block;
-    }
-
-    .project-card:hover .project-thumb img {
-      transform: scale(1.04);
-    }
-
-    .project-thumb-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 48px;
-      letter-spacing: 3px;
-      color: #333;
-    }
-
-    .project-thumb video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .project-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      display: flex;
-      align-items: flex-end;
-      padding: 20px;
-    }
-
-    .project-card:hover .project-overlay {
-      opacity: 1;
-    }
-
-    .overlay-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      padding: 5px 12px;
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--white);
-    }
-
-    .project-info {
-      padding: 24px;
-    }
-
-    .project-cat {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      color: var(--red);
-      margin-bottom: 8px;
-    }
-
-    .project-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 1.5px;
-      color: var(--white);
-      margin-bottom: 10px;
-      line-height: 1.1;
-    }
-
-    .project-desc {
-      font-size: 13px;
-      color: var(--light-gray);
-      line-height: 1.6;
-    }
-
-    .project-card.featured {
-      grid-column: span 2;
-    }
-
-    .project-card.featured .project-thumb {
-      aspect-ratio: 21/9;
-    }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.92);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--gray);
-      border: 1px solid #2a2a2a;
-      max-width: 900px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      transform: translateY(20px);
-      transition: transform 0.3s;
-    }
-
-    .modal-overlay.open .modal {
-      transform: translateY(0);
-    }
-
-    .modal-media {
-      width: 100%;
-      background: #111;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .modal-media-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2px;
-    }
-
-    .modal-media-grid img,
-    .modal-media-grid video {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .modal-media-grid img:hover { opacity: 0.8; }
-
-    .modal-media-single img,
-    .modal-media-single video {
-      width: 100%;
-      max-height: 450px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .modal-body {
-      padding: 36px 40px;
-    }
-
-    .modal-cat {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--red);
-      margin-bottom: 12px;
-    }
-
-    .modal-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-    }
-
-    .modal-desc {
-      font-size: 15px;
-      color: #bbb;
-      line-height: 1.8;
-      margin-bottom: 28px;
-    }
-
-    .modal-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-
-    .modal-tag {
-      padding: 5px 12px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      border: 1px solid #333;
-      color: var(--light-gray);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px; right: 24px;
-      background: none;
-      border: 1px solid #333;
-      color: var(--white);
-      width: 40px; height: 40px;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.2s;
-      z-index: 10;
-    }
-
-    .modal-close:hover { border-color: var(--red); color: var(--red); }
-
-    /* ── EXPERIENCE ── */
-    #experience .exp-list {
-      margin-top: 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .exp-item {
-      background: var(--gray);
-      border: 1px solid #1e1e1e;
-      padding: 36px 40px;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 40px;
-      transition: border-color 0.3s;
-    }
-
-    .exp-item:hover { border-color: #2a2a2a; }
-
-    .exp-meta {
-      padding-right: 40px;
-      border-right: 1px solid #222;
-    }
-
-    .exp-company {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 2px;
-      color: var(--white);
-      margin-bottom: 6px;
-    }
-
-    .exp-dates {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--light-gray);
-      margin-bottom: 12px;
-    }
-
-    .exp-location {
-      font-size: 12px;
-      color: #555;
-    }
-
-    .exp-role {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-
-    .exp-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .exp-bullets li {
-      font-size: 14px;
-      color: #999;
-      padding-left: 16px;
-      position: relative;
-      line-height: 1.6;
-    }
-
-    .exp-bullets li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--red);
-    }
-
-    /* ── EDUCATION ── */
-    #education .edu-card {
-      background: var(--gray);
-      border: 1px solid #1e1e1e;
-      padding: 48px;
-      margin-top: 48px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .edu-school {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
-
-    .edu-degree {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: #bbb;
-      margin-bottom: 6px;
-    }
-
-    .edu-detail {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--light-gray);
-    }
-
-    .edu-gpa {
-      text-align: center;
-    }
-
-    .edu-gpa-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 64px;
-      letter-spacing: 2px;
-      color: var(--blue);
-      line-height: 1;
-    }
-
-    .edu-gpa-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--light-gray);
-      margin-top: 4px;
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      position: relative;
-      overflow: hidden;
-    }
-
-    #contact::before {
-      content: 'LETS\ATALK';
-      position: absolute;
-      right: -80px; bottom: -60px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 300px;
-      color: #111;
-      line-height: 0.85;
-      pointer-events: none;
-      white-space: pre;
-      letter-spacing: -5px;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin-top: 48px;
-      position: relative;
-    }
-
-    .contact-intro {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 22px;
-      color: #bbb;
-      line-height: 1.5;
-      margin-bottom: 36px;
-    }
-
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 20px 24px;
-      background: var(--gray);
-      border: 1px solid #1e1e1e;
-      text-decoration: none;
-      color: var(--white);
-      transition: border-color 0.2s, padding-left 0.2s;
-    }
-
-    .contact-link:hover {
-      border-color: #333;
-      padding-left: 32px;
-    }
-
-    .contact-link-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      color: var(--light-gray);
-      width: 70px;
-      flex-shrink: 0;
-    }
-
-    .contact-link-value {
-      font-size: 14px;
-      color: var(--white);
-    }
-
-    .contact-link-arrow {
-      margin-left: auto;
-      color: var(--light-gray);
-      transition: transform 0.2s, color 0.2s;
-    }
-
-    .contact-link:hover .contact-link-arrow {
-      transform: translateX(4px);
-      color: var(--red);
-    }
-
-    .contact-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .resume-download {
-      background: var(--gray);
-      border: 1px solid #1e1e1e;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .resume-download p {
-      font-size: 13px;
-      color: var(--light-gray);
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--black); }
-    ::-webkit-scrollbar-thumb { background: #333; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--red); }
-
-    /* ── MOBILE ── */
-    @media (max-width: 900px) {
-      :root { --sidebar-w: 0px; }
-
-      #sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        flex-direction: row;
-        align-items: center;
-        padding: 16px 20px;
-        border-right: none;
-        border-bottom: 1px solid #222;
-      }
-
-      .sidebar-logo { border-bottom: none; padding: 0; margin-right: auto; }
-      nav { flex: none; padding: 0; display: flex; }
-      nav a { padding: 8px 12px; font-size: 9px; }
-      nav a::before { display: none; }
-      nav a:hover, nav a.active { padding-left: 12px; }
-      .sidebar-social { display: none; }
-
-      main { margin-left: 0; }
-
-      section { padding: 60px 28px; }
-      #hero { padding: 60px 28px; }
-      #hero::before { display: none; }
-
-      .about-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card.featured { grid-column: span 1; }
-      .exp-item { grid-template-columns: 1fr; }
-      .exp-meta { border-right: none; padding-right: 0; border-bottom: 1px solid #222; padding-bottom: 20px; }
-      .edu-card { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; }
-      #contact::before { display: none; }
-      .modal-overlay { padding: 16px; }
-      .modal-body { padding: 24px; }
-    }
-
-    /* Lightbox for modal images */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.97);
-      z-index: 1100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-    }
-    .lightbox.open { opacity: 1; pointer-events: all; }
-    .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; }
-    .lightbox-close {
-      position: absolute;
-      top: 20px; right: 24px;
-      background: none;
-      border: 1px solid #333;
-      color: var(--white);
-      width: 40px; height: 40px;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pdf-embed {
-      width: 100%;
-      height: 600px;
-      border: none;
-      display: block;
-      background: #111;
-    }
-
-    .iframe-embed {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: none;
-      display: block;
-    }
-
-    .modal-media-grid.has-videos iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: none;
+    :root { --black:#0a0a0a; --white:#f5f5f0; --red:#e8132a; --blue:#1a3fe4; --gray:#1c1c1c; --mid-gray:#2e2e2e; --light-gray:#888; --sidebar-w:220px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;}
+    #sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--gray);border-right:1px solid #222;display:flex;flex-direction:column;padding:40px 0;z-index:100;}
+    .sidebar-logo{padding:0 28px 36px;border-bottom:1px solid #222;}
+    .sidebar-logo .name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;line-height:1;color:var(--white);text-decoration:none;display:block;}
+    .sidebar-logo .title{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--light-gray);margin-top:6px;}
+    nav{flex:1;padding:28px 0;}
+    nav a{display:block;padding:10px 28px;font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--light-gray);text-decoration:none;transition:color .2s,padding-left .2s;position:relative;}
+    nav a::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:0;background:var(--red);transition:height .2s;}
+    nav a:hover,nav a.active{color:var(--white);padding-left:36px;}
+    nav a:hover::before,nav a.active::before{height:60%;}
+    .sidebar-social{padding:28px;border-top:1px solid #222;display:flex;gap:14px;}
+    .sidebar-social a{color:var(--light-gray);text-decoration:none;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;transition:color .2s;}
+    .sidebar-social a:hover{color:var(--white);}
+    main{margin-left:var(--sidebar-w);min-height:100vh;}
+    section{padding:100px 80px;border-bottom:1px solid #1a1a1a;opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+    section.visible{opacity:1;transform:translateY(0);}
+    .section-label{font-size:10px;text-transform:uppercase;letter-spacing:4px;color:var(--red);margin-bottom:16px;}
+    h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);letter-spacing:3px;line-height:.95;color:var(--white);}
+    /* HERO */
+    #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px;position:relative;overflow:hidden;border-bottom:1px solid #1a1a1a;opacity:1;transform:none;}
+    #hero::before{content:'JN';position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(300px,35vw,500px);color:#111;line-height:1;pointer-events:none;user-select:none;letter-spacing:-10px;}
+    .hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:4px;color:var(--light-gray);margin-bottom:20px;}
+    .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,10vw,140px);letter-spacing:4px;line-height:.9;margin-bottom:24px;}
+    .hero-name span.red{color:var(--red);}
+    .hero-name span.blue{color:var(--blue);}
+    .hero-tagline{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(18px,2.5vw,26px);color:var(--light-gray);max-width:500px;margin-bottom:48px;line-height:1.4;}
+    .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+    .btn{display:inline-block;padding:14px 32px;font-size:11px;text-transform:uppercase;letter-spacing:2.5px;text-decoration:none;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .2s;cursor:pointer;border:none;}
+    .btn-red{background:var(--red);color:var(--white);}
+    .btn-red:hover{background:#c0101f;}
+    .btn-outline{background:transparent;color:var(--white);border:1px solid #333;}
+    .btn-outline:hover{border-color:var(--white);}
+    .hero-scroll{position:absolute;bottom:40px;left:80px;display:flex;align-items:center;gap:12px;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--light-gray);animation:bounce 2s infinite;}
+    .hero-scroll::before{content:'';width:1px;height:40px;background:var(--light-gray);}
+    @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+    /* ABOUT */
+    #about .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px;align-items:start;}
+    #about p{font-size:17px;line-height:1.8;color:#bbb;margin-bottom:20px;}
+    #about p strong{color:var(--white);font-weight:500;}
+    .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+    .stat-box{background:var(--gray);padding:32px 28px;border:1px solid #222;}
+    .stat-number{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:2px;line-height:1;margin-bottom:8px;}
+    .stat-number.red{color:var(--red);}
+    .stat-number.blue{color:var(--blue);}
+    .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--light-gray);}
+    .skills-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;}
+    .skill-tag{padding:8px 16px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;border:1px solid #2a2a2a;color:var(--light-gray);transition:all .2s;}
+    .skill-tag:hover{border-color:var(--red);color:var(--white);}
+    /* PROJECTS */
+    #projects .projects-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;}
+    .filter-tabs{display:flex;gap:4px;}
+    .filter-tab{padding:8px 18px;font-size:10px;text-transform:uppercase;letter-spacing:2px;background:none;border:1px solid #2a2a2a;color:var(--light-gray);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+    .filter-tab:hover,.filter-tab.active{background:var(--red);border-color:var(--red);color:var(--white);}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:2px;}
+    .project-card{background:var(--gray);border:1px solid #1e1e1e;overflow:hidden;text-decoration:none;display:block;transition:border-color .3s;}
+    .project-card:hover{border-color:#333;}
+    .project-card.hidden{display:none;}
+    .project-thumb{width:100%;aspect-ratio:16/10;background:var(--mid-gray);overflow:hidden;position:relative;}
+    .project-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block;}
+    .project-card:hover .project-thumb img{transform:scale(1.04);}
+    .project-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:3px;color:#333;}
+    .project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 60%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:20px;}
+    .project-card:hover .project-overlay{opacity:1;}
+    .overlay-tag{font-size:10px;text-transform:uppercase;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(255,255,255,.3);color:var(--white);}
+    .project-info{padding:24px;}
+    .project-cat{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--red);margin-bottom:8px;}
+    .project-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1.5px;color:var(--white);margin-bottom:10px;line-height:1.1;}
+    .project-desc{font-size:13px;color:var(--light-gray);line-height:1.6;}
+    .project-card.featured{grid-column:span 2;}
+    .project-card.featured .project-thumb{aspect-ratio:21/9;}
+    /* EXPERIENCE */
+    #experience .exp-list{margin-top:48px;display:flex;flex-direction:column;gap:2px;}
+    .exp-item{background:var(--gray);border:1px solid #1e1e1e;padding:36px 40px;display:grid;grid-template-columns:220px 1fr;gap:40px;}
+    .exp-meta{padding-right:40px;border-right:1px solid #222;}
+    .exp-company{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--white);margin-bottom:6px;}
+    .exp-dates{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--light-gray);margin-bottom:12px;}
+    .exp-location{font-size:12px;color:#555;}
+    .exp-role{font-family:'DM Serif Display',serif;font-style:italic;font-size:18px;color:var(--white);margin-bottom:16px;}
+    .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .exp-bullets li{font-size:14px;color:#999;padding-left:16px;position:relative;line-height:1.6;}
+    .exp-bullets li::before{content:'—';position:absolute;left:0;color:var(--red);}
+    /* EDUCATION */
+    #education .edu-card{background:var(--gray);border:1px solid #1e1e1e;padding:48px;margin-top:48px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
+    .edu-school{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;margin-bottom:8px;}
+    .edu-degree{font-family:'DM Serif Display',serif;font-style:italic;font-size:18px;color:#bbb;margin-bottom:6px;}
+    .edu-detail{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--light-gray);}
+    .edu-gpa{text-align:center;}
+    .edu-gpa-num{font-family:'Bebas Neue',sans-serif;font-size:64px;letter-spacing:2px;color:var(--blue);line-height:1;}
+    .edu-gpa-label{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--light-gray);margin-top:4px;}
+    /* CONTACT */
+    #contact{position:relative;overflow:hidden;}
+    #contact::before{content:'LETS  TALK';position:absolute;right:-80px;bottom:-60px;font-family:'Bebas Neue',sans-serif;font-size:200px;color:#111;line-height:.85;pointer-events:none;white-space:pre;letter-spacing:-5px;}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px;position:relative;}
+    .contact-intro{font-family:'DM Serif Display',serif;font-style:italic;font-size:22px;color:#bbb;line-height:1.5;margin-bottom:36px;}
+    .contact-links{display:flex;flex-direction:column;gap:2px;}
+    .contact-link{display:flex;align-items:center;gap:20px;padding:20px 24px;background:var(--gray);border:1px solid #1e1e1e;text-decoration:none;color:var(--white);transition:border-color .2s,padding-left .2s;}
+    .contact-link:hover{border-color:#333;padding-left:32px;}
+    .contact-link-label{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--light-gray);width:70px;flex-shrink:0;}
+    .contact-link-value{font-size:14px;color:var(--white);}
+    .contact-link-arrow{margin-left:auto;color:var(--light-gray);transition:transform .2s,color .2s;}
+    .contact-link:hover .contact-link-arrow{transform:translateX(4px);color:var(--red);}
+    .contact-right{display:flex;flex-direction:column;justify-content:center;}
+    .resume-download{background:var(--gray);border:1px solid #1e1e1e;padding:40px;text-align:center;}
+    .resume-download p{font-size:13px;color:var(--light-gray);margin-bottom:24px;line-height:1.6;}
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--black);}
+    ::-webkit-scrollbar-thumb{background:#333;}
+    ::-webkit-scrollbar-thumb:hover{background:var(--red);}
+    @media(max-width:900px){
+      :root{--sidebar-w:0px;}
+      #sidebar{width:100%;height:auto;position:relative;flex-direction:row;align-items:center;padding:16px 20px;border-right:none;border-bottom:1px solid #222;}
+      .sidebar-logo{border-bottom:none;padding:0;margin-right:auto;}
+      nav{flex:none;padding:0;display:flex;}
+      nav a{padding:8px 12px;font-size:9px;}
+      nav a::before{display:none;}
+      nav a:hover,nav a.active{padding-left:12px;}
+      .sidebar-social{display:none;}
+      main{margin-left:0;}
+      section{padding:60px 28px;}
+      #hero{padding:60px 28px;}
+      #hero::before{display:none;}
+      .about-grid{grid-template-columns:1fr;}
+      .projects-grid{grid-template-columns:1fr;}
+      .project-card.featured{grid-column:span 1;}
+      .exp-item{grid-template-columns:1fr;}
+      .exp-meta{border-right:none;padding-right:0;border-bottom:1px solid #222;padding-bottom:20px;}
+      .edu-card{grid-template-columns:1fr;}
+      .contact-grid{grid-template-columns:1fr;}
+      #contact::before{display:none;}
     }
   </style>
 </head>
 <body>
-
-<!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="sidebar-logo">
-    <div class="name">Joe Novy</div>
+    <a href="index.html" class="name">Joe Novy</a>
     <div class="title">Creative & Marketing</div>
   </div>
   <nav>
@@ -985,17 +161,10 @@
     <a href="https://github.com/JoeNovy" target="_blank">GitHub</a>
   </div>
 </aside>
-
-<!-- MAIN -->
 <main>
-
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-eyebrow">Royal Oak, MI &nbsp;·&nbsp; Open to Opportunities</div>
-    <div class="hero-name">
-      <span>Joe</span><br>
-      <span class="red">No</span><span class="blue">vy</span>
-    </div>
+    <div class="hero-name"><span>Joe</span><br><span class="red">No</span><span class="blue">vy</span></div>
     <div class="hero-tagline">Creative & Marketing Professional. Design, strategy, and the details that make both work.</div>
     <div class="hero-ctas">
       <a href="#projects" class="btn btn-red">View Work</a>
@@ -1004,7 +173,6 @@
     <div class="hero-scroll">Scroll</div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-label">About Me</div>
     <h2>DESIGNER.<br>MARKETER.<br>BUILDER.</h2>
@@ -1013,53 +181,22 @@
         <p>I'm a <strong>Creative & Marketing Professional</strong> based in Royal Oak, MI. My background covers graphic design, video production, 3D visualization, marketing automation, and SEO, with a focus on work that actually moves the needle.</p>
         <p>I graduated from <strong>Michigan State University</strong> with a 3.8 GPA in Games & Interactive Media and a minor in Graphic Design. I've done Blender product renders for a Tokyo robotics startup and rebuilt the digital presence of a cybersecurity firm from the ground up. The range is the point.</p>
         <p>I care about the craft at every level, from the big strategic picture down to the kerning.</p>
-
         <div class="skills-grid">
-          <span class="skill-tag">Photoshop</span>
-          <span class="skill-tag">Illustrator</span>
-          <span class="skill-tag">Premiere Pro</span>
-          <span class="skill-tag">After Effects</span>
-          <span class="skill-tag">Blender</span>
-          <span class="skill-tag">Figma</span>
-          <span class="skill-tag">InDesign</span>
-          <span class="skill-tag">SEO</span>
-          <span class="skill-tag">Google Analytics 4</span>
-          <span class="skill-tag">Power Automate</span>
-          <span class="skill-tag">CRM / HighLevel</span>
-          <span class="skill-tag">HTML / CSS</span>
-          <span class="skill-tag">Videography</span>
-          <span class="skill-tag">Meta Business Suite</span>
-          <span class="skill-tag">Hootsuite</span>
+          <span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span><span class="skill-tag">Premiere Pro</span><span class="skill-tag">After Effects</span><span class="skill-tag">Blender</span><span class="skill-tag">Figma</span><span class="skill-tag">InDesign</span><span class="skill-tag">SEO</span><span class="skill-tag">Google Analytics 4</span><span class="skill-tag">Power Automate</span><span class="skill-tag">CRM / HighLevel</span><span class="skill-tag">HTML / CSS</span><span class="skill-tag">Videography</span><span class="skill-tag">Meta Business Suite</span><span class="skill-tag">Hootsuite</span>
         </div>
       </div>
       <div class="about-stats">
-        <div class="stat-box">
-          <div class="stat-number red">3+</div>
-          <div class="stat-label">Years of Experience</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number blue">35→7</div>
-          <div class="stat-label">SEO Ranking Improvement</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number blue">3.8</div>
-          <div class="stat-label">GPA at MSU</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number red">4</div>
-          <div class="stat-label">Industries Worked In</div>
-        </div>
+        <div class="stat-box"><div class="stat-number red">3+</div><div class="stat-label">Years of Experience</div></div>
+        <div class="stat-box"><div class="stat-number blue">35→7</div><div class="stat-label">SEO Ranking Improvement</div></div>
+        <div class="stat-box"><div class="stat-number blue">3.8</div><div class="stat-label">GPA at MSU</div></div>
+        <div class="stat-box"><div class="stat-number red">4</div><div class="stat-label">Industries Worked In</div></div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="projects-header">
-      <div>
-        <div class="section-label">Selected Work</div>
-        <h2>PROJECTS</h2>
-      </div>
+      <div><div class="section-label">Selected Work</div><h2>PROJECTS</h2></div>
       <div class="filter-tabs">
         <button class="filter-tab active" data-filter="all">All</button>
         <button class="filter-tab" data-filter="marketing">Marketing</button>
@@ -1068,11 +205,9 @@
         <button class="filter-tab" data-filter="print">Print</button>
       </div>
     </div>
-
     <div class="projects-grid">
 
-      <!-- STACK Digital Presence -->
-      <div class="project-card featured" data-cat="marketing" data-modal="stack-digital">
+      <a class="project-card featured" data-cat="marketing" href="projects/stack-digital.html">
         <div class="project-thumb">
           <img src="assets/projects/stack/STACK_website_mockup.png" alt="STACK Cybersecurity Website" />
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
@@ -1082,23 +217,21 @@
           <div class="project-title">STACK Cybersecurity — Digital Presence</div>
           <div class="project-desc">SEO overhaul, website redesign, marketing automation, and content production for a Michigan-based managed IT and cybersecurity firm.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- STACK Content & Design -->
-      <div class="project-card" data-cat="design" data-modal="stack-content">
+      <a class="project-card" data-cat="design" href="projects/stack-content.html">
         <div class="project-thumb">
-          <img src="assets/projects/stack/Cyber-Attack-Lifecycle-cover.png" alt="STACK Content Design" />
+          <img src="assets/projects/stack/GTIA_award.jpg" alt="STACK Content Design" />
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
         </div>
         <div class="project-info">
           <div class="project-cat">Content & Design</div>
           <div class="project-title">Content & Design at STACK</div>
-          <div class="project-desc">A recurring content series spanning educational carousels, event graphics, award announcements, and speaking engagement promotions.</div>
+          <div class="project-desc">Educational carousels, event graphics, award announcements, and speaking engagement promotions for STACK Cybersecurity.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- XELA 3D Renders -->
-      <div class="project-card" data-cat="3d" data-modal="xela">
+      <a class="project-card" data-cat="3d" href="projects/xela.html">
         <div class="project-thumb">
           <img src="assets/projects/xela/FingertipFinalRenderAngledView.png" alt="XELA Robotics 3D Renders" />
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
@@ -1106,14 +239,13 @@
         <div class="project-info">
           <div class="project-cat">3D Visualization</div>
           <div class="project-title">XELA Robotics — Product Visualization</div>
-          <div class="project-desc">Photorealistic 3D models, renders, and animations of tactile robotic sensor products for use in marketing and the XELA website.</div>
+          <div class="project-desc">Photorealistic 3D models, renders, and animations of tactile robotic sensor products for use in marketing and on the XELA website.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- OTHS Branding -->
-      <div class="project-card" data-cat="design" data-modal="oths-brand">
+      <a class="project-card" data-cat="design" href="projects/oths-brand.html">
         <div class="project-thumb">
-          <img src="assets/projects/oths/OTHS_AT_Logo_2.png" alt="OTHS Athletic Training Branding" />
+          <img src="assets/projects/oths/Cap_Mockup.png" alt="OTHS Athletic Training Branding" />
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
         </div>
         <div class="project-info">
@@ -1121,10 +253,9 @@
           <div class="project-title">OTHS Athletic Training — Brand Redesign</div>
           <div class="project-desc">Three logo variations and a complete brand identity system for the O'Fallon Township High School Athletic Training Department.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- T-Shirt Design -->
-      <div class="project-card" data-cat="design" data-modal="tshirt">
+      <a class="project-card" data-cat="design" href="projects/tshirt.html">
         <div class="project-thumb">
           <img src="assets/projects/tshirts/OkobojiTeeMockup2Back.jpg" alt="T-Shirt Design" />
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
@@ -1134,10 +265,9 @@
           <div class="project-title">Okoboji Family Vacation Tees</div>
           <div class="project-desc">Custom t-shirt designs for annual family vacations. The 2023 playing card motif and the 2024 retro groovy summer aesthetic.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- Sports Graphics -->
-      <div class="project-card" data-cat="design" data-modal="sports">
+      <a class="project-card" data-cat="design" href="projects/sports.html">
         <div class="project-thumb">
           <img src="assets/projects/sports/Spartan_Graphic_Design.png" alt="Sports Graphics" />
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
@@ -1147,12 +277,11 @@
           <div class="project-title">Sports Graphics</div>
           <div class="project-desc">Sports poster designs built on photo compositing, bold typography, and color work. MSU Football, senior athlete spotlights, and more.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- NFL Interactive Magazine -->
-      <div class="project-card" data-cat="print" data-modal="nfl">
+      <a class="project-card" data-cat="print" href="projects/nfl.html">
         <div class="project-thumb">
-          <img src="assets/projects/school/nfl-cover.png" alt="NFL Magazine Design" />
+          <div class="project-thumb-placeholder">NFL</div>
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
         </div>
         <div class="project-info">
@@ -1160,12 +289,11 @@
           <div class="project-title">NFL Super Bowl Contenders — Interactive Magazine</div>
           <div class="project-desc">A fully designed interactive sports magazine ranking the top Super Bowl LVII contenders, with custom layouts, photo composites, and typography.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- Kanye Magazine -->
-      <div class="project-card" data-cat="print" data-modal="kanye">
+      <a class="project-card" data-cat="print" href="projects/kanye.html">
         <div class="project-thumb">
-          <img src="assets/projects/school/kanye-cover.png" alt="Kanye Magazine" />
+          <div class="project-thumb-placeholder">YE</div>
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
         </div>
         <div class="project-info">
@@ -1173,38 +301,30 @@
           <div class="project-title">YE — All 10 Kanye Albums Ranked</div>
           <div class="project-desc">A self-written and fully designed editorial magazine feature on Kanye West's discography, blending bold cover design with editorial layout.</div>
         </div>
-      </div>
+      </a>
 
-      <!-- Detroit News Layout -->
-      <div class="project-card" data-cat="print" data-modal="detroit-news">
+      <a class="project-card" data-cat="print" href="projects/detroit-news.html">
         <div class="project-thumb">
-          <img src="assets/projects/school/detroit-news-cover.jpg" alt="Detroit News Layout" />
+          <div class="project-thumb-placeholder" style="font-size:20px;">Detroit News</div>
           <div class="project-overlay"><span class="overlay-tag">View Project</span></div>
         </div>
         <div class="project-info">
           <div class="project-cat">Editorial Layout · Class Assignment</div>
           <div class="project-title">The Detroit News — Print & Web Layout</div>
-          <div class="project-desc">Newspaper layout design exercises recreating both a print broadsheet edition and a web homepage for The Detroit News.</div>
+          <div class="project-desc">Newspaper layout design exercises recreating both a print broadsheet and a web homepage for The Detroit News.</div>
         </div>
-      </div>
+      </a>
 
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
   <section id="experience">
     <div class="section-label">Work History</div>
     <h2>EXPERIENCE</h2>
     <div class="exp-list">
-
       <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-company">STACK Cybersecurity</div>
-          <div class="exp-dates">Jul 2025 – Apr 2026</div>
-          <div class="exp-location">Livonia, MI</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Marketing & Automation Specialist</div>
+        <div class="exp-meta"><div class="exp-company">STACK Cybersecurity</div><div class="exp-dates">Jul 2025 – Apr 2026</div><div class="exp-location">Livonia, MI</div></div>
+        <div><div class="exp-role">Marketing & Automation Specialist</div>
           <ul class="exp-bullets">
             <li>Primary liaison to an external marketing agency, coordinating on campaign strategy, reviewing deliverables, and implementing web and digital optimizations.</li>
             <li>Moved average Google search rankings from roughly position 35 to position 7 for competitive cybersecurity keywords through SEO-focused page development in a PHP CMS.</li>
@@ -1216,15 +336,9 @@
           </ul>
         </div>
       </div>
-
       <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-company">Michigan State University</div>
-          <div class="exp-dates">Feb 2025 – Aug 2025</div>
-          <div class="exp-location">East Lansing, MI</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Videographer — Center for Community & Economic Development</div>
+        <div class="exp-meta"><div class="exp-company">Michigan State University</div><div class="exp-dates">Feb 2025 – Aug 2025</div><div class="exp-location">East Lansing, MI</div></div>
+        <div><div class="exp-role">Videographer — Center for Community & Economic Development</div>
           <ul class="exp-bullets">
             <li>Maintained electronic networking and social media presence for the Center.</li>
             <li>Supported development of web-based media for marketing and promotion at trade and partner events.</li>
@@ -1232,15 +346,9 @@
           </ul>
         </div>
       </div>
-
       <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-company">XELA Robotics</div>
-          <div class="exp-dates">Jun 2024 – Dec 2024</div>
-          <div class="exp-location">Tokyo, Japan</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Marketing Intern</div>
+        <div class="exp-meta"><div class="exp-company">XELA Robotics</div><div class="exp-dates">Jun 2024 – Dec 2024</div><div class="exp-location">Tokyo, Japan</div></div>
+        <div><div class="exp-role">Marketing Intern</div>
           <ul class="exp-bullets">
             <li>Collaborated with the marketing lead to enhance the XELA website using photorealistic 3D renders.</li>
             <li>Modeled, textured, and rendered 3D product models in Blender for use across the company website and marketing materials.</li>
@@ -1249,15 +357,9 @@
           </ul>
         </div>
       </div>
-
       <div class="exp-item">
-        <div class="exp-meta">
-          <div class="exp-company">Freelance</div>
-          <div class="exp-dates">Fall 2021 – Present</div>
-          <div class="exp-location">East Lansing, MI</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Graphic Designer</div>
+        <div class="exp-meta"><div class="exp-company">Freelance</div><div class="exp-dates">Fall 2021 – Present</div><div class="exp-location">East Lansing, MI</div></div>
+        <div><div class="exp-role">Graphic Designer</div>
           <ul class="exp-bullets">
             <li>Designed three modern logo variations for the OTHS Athletic Training Department, replacing the department's previous branding.</li>
             <li>Created 26 print posters and digital graphics using Photoshop and Illustrator for the OTHS Athletic Department, sold to fans and athletic boosters.</li>
@@ -1265,11 +367,9 @@
           </ul>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- EDUCATION -->
   <section id="education">
     <div class="section-label">Academic Background</div>
     <h2>EDUCATION</h2>
@@ -1277,16 +377,12 @@
       <div>
         <div class="edu-school">Michigan State University</div>
         <div class="edu-degree">Bachelor of Arts, Games &amp; Interactive Media</div>
-        <div class="edu-detail">Minor: Graphic Design &nbsp;·&nbsp; College of Communication Arts & Sciences &nbsp;·&nbsp; May 2025 &nbsp;·&nbsp; East Lansing, MI</div>
+        <div class="edu-detail">Minor: Graphic Design &nbsp;·&nbsp; College of Communication Arts &amp; Sciences &nbsp;·&nbsp; May 2025 &nbsp;·&nbsp; East Lansing, MI</div>
       </div>
-      <div class="edu-gpa">
-        <div class="edu-gpa-num">3.8</div>
-        <div class="edu-gpa-label">GPA</div>
-      </div>
+      <div class="edu-gpa"><div class="edu-gpa-num">3.8</div><div class="edu-gpa-label">GPA</div></div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-label">Get In Touch</div>
     <h2>LET'S<br>WORK.</h2>
@@ -1294,26 +390,10 @@
       <div>
         <p class="contact-intro">Open to creative, marketing, and design opportunities. If you have a project in mind or just want to connect, reach out.</p>
         <div class="contact-links">
-          <a href="mailto:joey.novy@gmail.com" class="contact-link">
-            <span class="contact-link-label">Email</span>
-            <span class="contact-link-value">joey.novy@gmail.com</span>
-            <span class="contact-link-arrow">→</span>
-          </a>
-          <a href="https://www.linkedin.com/in/joseph-novy" target="_blank" class="contact-link">
-            <span class="contact-link-label">LinkedIn</span>
-            <span class="contact-link-value">/in/joseph-novy</span>
-            <span class="contact-link-arrow">→</span>
-          </a>
-          <a href="https://github.com/JoeNovy" target="_blank" class="contact-link">
-            <span class="contact-link-label">GitHub</span>
-            <span class="contact-link-value">github.com/JoeNovy</span>
-            <span class="contact-link-arrow">→</span>
-          </a>
-          <a href="tel:6189735638" class="contact-link">
-            <span class="contact-link-label">Phone</span>
-            <span class="contact-link-value">(618) 973-5638</span>
-            <span class="contact-link-arrow">→</span>
-          </a>
+          <a href="mailto:joey.novy@gmail.com" class="contact-link"><span class="contact-link-label">Email</span><span class="contact-link-value">joey.novy@gmail.com</span><span class="contact-link-arrow">→</span></a>
+          <a href="https://www.linkedin.com/in/joseph-novy" target="_blank" class="contact-link"><span class="contact-link-label">LinkedIn</span><span class="contact-link-value">/in/joseph-novy</span><span class="contact-link-arrow">→</span></a>
+          <a href="https://github.com/JoeNovy" target="_blank" class="contact-link"><span class="contact-link-label">GitHub</span><span class="contact-link-value">github.com/JoeNovy</span><span class="contact-link-arrow">→</span></a>
+          <a href="tel:6189735638" class="contact-link"><span class="contact-link-label">Phone</span><span class="contact-link-value">(618) 973-5638</span><span class="contact-link-arrow">→</span></a>
         </div>
       </div>
       <div class="contact-right">
@@ -1324,47 +404,22 @@
       </div>
     </div>
   </section>
-
 </main>
 
-<!-- PROJECT MODALS -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modalContent" style="position:relative;">
-    <button class="modal-close" id="modalClose">✕</button>
-    <div id="modalInner"></div>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose">✕</button>
-  <img src="" alt="" id="lightboxImg" />
-</div>
-
 <script>
-  // ── Intersection Observer for section animations
   const sections = document.querySelectorAll('section:not(#hero)');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
+  const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.08});
   sections.forEach(s => observer.observe(s));
-
-  // ── Active nav link
   const navLinks = document.querySelectorAll('.nav-link');
   const allSections = document.querySelectorAll('section');
   window.addEventListener('scroll', () => {
     let current = '';
-    allSections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 200) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
+    allSections.forEach(s => { if(window.scrollY >= s.offsetTop - 200) current = s.id; });
+    navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
   });
-
-  // ── Filter tabs
   const tabs = document.querySelectorAll('.filter-tab');
   const cards = document.querySelectorAll('.project-card');
+  const featuredCard = document.querySelector('.project-card.featured');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -1373,230 +428,9 @@
       cards.forEach(card => {
         const match = filter === 'all' || card.dataset.cat === filter;
         card.classList.toggle('hidden', !match);
-        // featured only if all
-        if (card.classList.contains('featured')) {
-          card.classList.toggle('featured', filter === 'all');
-        }
       });
+      if(featuredCard) featuredCard.classList.toggle('featured', filter === 'all');
     });
-  });
-
-  // ── Modal data
-  const modalData = {
-    'stack-digital': {
-      cat: 'Marketing & Web',
-      title: 'STACK Cybersecurity — Digital Presence',
-      desc: `At STACK Cybersecurity I led the overhaul of the company's digital footprint as the sole in-house marketing hire. I redesigned key pages of the website in a PHP-based CMS and drove average Google search rankings from roughly 35 down to 7 for competitive cybersecurity keywords. On the automation side, I built lead generation workflows in Microsoft Power Automate that connected intake forms to CRM platforms, handling prospects from first contact through campaign enrollment. I also trained and deployed an AI-powered website chatbot, refining its knowledge base and response logic to match brand voice. Beyond that, I produced video content and visual assets for campaigns and trade events, and managed performance tracking across GA4, Google Search Console, LinkedIn, Meta, and YouTube.`,
-      tags: ['SEO', 'PHP CMS', 'Google Analytics 4', 'Power Automate', 'CRM', 'Video Production', 'Social Media'],
-      media: [
-        { type: 'img', src: 'assets/projects/stack/STACK_website_mockup.png', alt: 'STACK Website Mockup' },
-      ],
-      link: 'https://stackcyber.com'
-    },
-    'stack-content': {
-      cat: 'Content & Design',
-      title: 'Content & Design at STACK',
-      desc: `I built and maintained STACK's content design output across multiple formats. The educational carousel series included "The Cyber-Attack Lifecycle" and "FCI vs. CUI," both written and designed to break down complex cybersecurity concepts for an audience of manufacturers and IT leaders. I also designed the Tech Tip Thursday series, event graphics, award announcements for the GTIA Spotlight Award, and speaking engagement promotions for company leadership. On the video side, I produced and edited coverage of STACK's annual Hackoween event, handling both shooting and post-production.`,
-      tags: ['Adobe Illustrator', 'Photoshop', 'Premiere Pro', 'Social Media Design', 'Event Production'],
-      media: [
-        { type: 'img', src: 'assets/projects/stack/tech-tip-p1.jpg', alt: 'Tech Tip Thursday — Slide 1' },
-        { type: 'img', src: 'assets/projects/stack/tech-tip-p2.jpg', alt: 'Tech Tip Thursday — Slide 2' },
-        { type: 'img', src: 'assets/projects/stack/tech-tip-p3.jpg', alt: 'Tech Tip Thursday — Slide 3' },
-        { type: 'img', src: 'assets/projects/stack/tech-tip-p4.jpg', alt: 'Tech Tip Thursday — Slide 4' },
-        { type: 'img', src: 'assets/projects/stack/tech-tip-p5.jpg', alt: 'Tech Tip Thursday — Slide 5' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p1.jpg', alt: 'Cyber-Attack Lifecycle — Slide 1' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p2.jpg', alt: 'Cyber-Attack Lifecycle — Slide 2' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p3.jpg', alt: 'Cyber-Attack Lifecycle — Slide 3' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p4.jpg', alt: 'Cyber-Attack Lifecycle — Slide 4' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p5.jpg', alt: 'Cyber-Attack Lifecycle — Slide 5' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p6.jpg', alt: 'Cyber-Attack Lifecycle — Slide 6' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p7.jpg', alt: 'Cyber-Attack Lifecycle — Slide 7' },
-        { type: 'img', src: 'assets/projects/stack/cyber-lifecycle-p8.jpg', alt: 'Cyber-Attack Lifecycle — Slide 8' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p1.jpg', alt: 'FCI vs CUI — Slide 1' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p2.jpg', alt: 'FCI vs CUI — Slide 2' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p3.jpg', alt: 'FCI vs CUI — Slide 3' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p4.jpg', alt: 'FCI vs CUI — Slide 4' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p5.jpg', alt: 'FCI vs CUI — Slide 5' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p6.jpg', alt: 'FCI vs CUI — Slide 6' },
-        { type: 'img', src: 'assets/projects/stack/fci-cui-p7.jpg', alt: 'FCI vs CUI — Slide 7' },
-        { type: 'img', src: 'assets/projects/stack/GTIA_award.jpg', alt: 'GTIA Award Graphic' },
-        { type: 'img', src: 'assets/projects/stack/MALA_speaking.jpg', alt: 'MALA Speaking Engagement' },
-        { type: 'yt', src: 'https://www.youtube.com/embed/ibqjRuPLTs4', title: 'Hackoween 2025 Preview' },
-        { type: 'yt', src: 'https://www.youtube.com/embed/ediVqE-iGdU', title: 'Hackoween 2025 Recap' },
-      ]
-    },
-    'xela': {
-      cat: '3D Visualization',
-      title: 'XELA Robotics — Product Visualization',
-      desc: `During my internship at XELA Robotics Co., Ltd. in Tokyo, I built a full suite of 3D product renders and animations for the uSkin sensor line. The uSPr 2F is a tactile fingertip sensor designed to mount directly onto Robotiq's 2F-85 and 2F-140 adaptive grippers. I modeled, textured, and rendered the sensors and full gripper assemblies in Blender across multiple camera angles, then created application scenes showing the sensors working in real-world contexts, including a warehouse automation environment modeled after Amazon fulfillment operations. I also produced animated sequences showing the sensor's tactile response behavior. Leadership gave me a top performance review for the work.`,
-      tags: ['Blender', '3D Modeling', 'Texturing', 'Rendering', 'Product Visualization', 'Animation'],
-      media: [
-        { type: 'img', src: 'assets/projects/xela/FingertipFinalRenderAngledView.png', alt: 'Fingertip Angled View' },
-        { type: 'img', src: 'assets/projects/xela/FingertipFinalRenderFrontView.png', alt: 'Fingertip Front View' },
-        { type: 'img', src: 'assets/projects/xela/FingertipFinalRenderBack.png', alt: 'Fingertip Back View' },
-        { type: 'img', src: 'assets/projects/xela/FingertipFinalRenderSide.png', alt: 'Fingertip Side View' },
-        { type: 'img', src: 'assets/projects/xela/FingertipFinalRenderTopView.png', alt: 'Fingertip Top View' },
-        { type: 'img', src: 'assets/projects/xela/2F-85Angled.png', alt: '2F-85 Angled' },
-        { type: 'img', src: 'assets/projects/xela/2F-85FrontView.png', alt: '2F-85 Front View' },
-        { type: 'img', src: 'assets/projects/xela/2F-85SideView.png', alt: '2F-85 Side View' },
-        { type: 'img', src: 'assets/projects/xela/2F-85TopView.png', alt: '2F-85 Top View' },
-        { type: 'img', src: 'assets/projects/xela/2F140Angled.png', alt: '2F-140 Angled' },
-        { type: 'img', src: 'assets/projects/xela/2F140Front.png', alt: '2F-140 Front View' },
-        { type: 'img', src: 'assets/projects/xela/2F140SideView.png', alt: '2F-140 Side View' },
-        { type: 'img', src: 'assets/projects/xela/2F140Top.png', alt: '2F-140 Top View' },
-        { type: 'img', src: 'assets/projects/xela/PotentialSolutionsRender.png', alt: 'Application Render' },
-        { type: 'img', src: 'assets/projects/xela/PS2Amazon.png', alt: 'Amazon Warehouse Scene (WIP)' },
-        { type: 'video', src: 'assets/projects/xela/FingertipBlinking.mp4', title: 'Fingertip Blinking Animation' },
-        { type: 'video', src: 'assets/projects/xela/AmazonApplicationAnimationDraft.mp4', title: 'Amazon Application Animation (WIP)' },
-      ]
-    },
-    'oths-brand': {
-      cat: 'Brand Identity',
-      title: 'OTHS Athletic Training — Brand Redesign',
-      desc: `I designed a full brand identity for the O'Fallon Township High School Athletic Training Department as a freelance project. The department needed to replace its existing branding, so I developed three logo variations: a full wordmark lockup, a compact circular emblem, and a standalone icon mark. All three are built around the school's navy and gold palette and integrate the department's "O" letterform with the medical caduceus symbol. The system was designed to work across apparel, signage, and digital use, and I delivered mockups on caps and hoodies to show it in context.`,
-      tags: ['Illustrator', 'Photoshop', 'Brand Identity', 'Logo Design', 'Apparel Mockups', 'Freelance'],
-      media: [
-        { type: 'img', src: 'assets/projects/oths/OTHS_AT_Logo_1.png', alt: 'OTHS Logo 1 — Full Wordmark' },
-        { type: 'img', src: 'assets/projects/oths/OTHS_AT_Logo_2.png', alt: 'OTHS Logo 2 — Circular Emblem' },
-        { type: 'img', src: 'assets/projects/oths/OTHS_AT_Logo_3.png', alt: 'OTHS Logo 3 — Icon Mark' },
-        { type: 'img', src: 'assets/projects/oths/OTHSPallete.png', alt: 'Color Palette' },
-        { type: 'img', src: 'assets/projects/oths/Cap_Mockup.png', alt: 'Cap Mockup' },
-        { type: 'img', src: 'assets/projects/oths/Hoodie_Mockup.png', alt: 'Hoodie Mockup' },
-      ]
-    },
-    'tshirt': {
-      cat: 'Apparel Design',
-      title: 'Okoboji Family Vacation Tees',
-      desc: `Custom t-shirt designs for annual family vacations to Lake Okoboji, Iowa. The 2023 shirt is built around a playing card motif featuring the Queen II riverboat, mixing a typewriter font with a classic card back pattern. The 2024 design goes full retro with bubble typography, a smiley sun illustration, and a red, blue, and cream palette. Both were front-and-back designs, printed and worn by the whole family on the trip.`,
-      tags: ['Illustrator', 'Photoshop', 'Apparel Design', 'Typography', 'Print Design'],
-      media: [
-        { type: 'img', src: 'assets/projects/tshirts/OkobojiTeeMockup1Front.jpg', alt: '2023 Front' },
-        { type: 'img', src: 'assets/projects/tshirts/OkobojiTeeMockup1Back.jpg', alt: '2023 Back' },
-        { type: 'img', src: 'assets/projects/tshirts/OkobojiTeeMockup3.jpg', alt: '2023 Flat Mockup' },
-        { type: 'img', src: 'assets/projects/tshirts/OkobojiTeeMockup2Front.jpg', alt: '2024 Front' },
-        { type: 'img', src: 'assets/projects/tshirts/OkobojiTeeMockup2Back.jpg', alt: '2024 Back' },
-      ]
-    },
-    'sports': {
-      cat: 'Graphic Design',
-      title: 'Sports Graphics',
-      desc: `Sports graphics built around photo compositing, bold typography, and color work. The MSU Spartans "Relentless" poster pulls together multiple player photos against a dark atmospheric background, with layered type treatment that fits the intensity of Big Ten football. Additional pieces include senior athlete spotlights and player graphics. More work in this category is in progress.`,
-      tags: ['Photoshop', 'Photo Manipulation', 'Typography', 'Composite Design', 'Sports'],
-      media: [
-        { type: 'img', src: 'assets/projects/sports/Spartan_Graphic_Design.png', alt: 'MSU Spartans Poster' },
-        { type: 'img', src: 'assets/projects/sports/24x36_OTHS_Seniors_2022.png', alt: 'OTHS Seniors 2022' },
-        { type: 'img', src: 'assets/projects/sports/Zach_Novy_v2.png', alt: 'Player Graphic' },
-      ]
-    },
-    'nfl': {
-      cat: 'Print Design · Class Assignment',
-      title: 'NFL Super Bowl Contenders — Interactive Magazine',
-      desc: `An interactive multi-page magazine produced for a journalism and design course at MSU, counting down the top 5 Super Bowl LVII contenders. Each team gets its own spread with a full-bleed player photo composite, team branding, salary cap data, and editorial analysis. Typography, layout, photo selection, and compositing were all handled from scratch. This was built as an interactive PDF — use the button below to open the full interactive version in a new tab.`,
-      tags: ['InDesign', 'Photoshop', 'Editorial Layout', 'Typography', 'Photo Compositing'],
-      media: [
-        { type: 'pdf', src: 'assets/projects/school/NFL_Graphic_Design.pdf' },
-      ],
-      link: 'assets/projects/school/NFL_Graphic_Design.pdf',
-      linkLabel: 'Open Interactive PDF'
-    },
-    'kanye': {
-      cat: 'Print Design · Class Assignment',
-      title: 'YE — All 10 Kanye Albums Ranked',
-      desc: `A self-written and fully designed editorial magazine feature on Kanye West's life and discography. The cover sets the tone with oversized typography and a dramatic concert image. The interior moves through his early life, career arc, and controversies before landing on a personal ranking of all 10 studio albums. Layout, writing, infographics, and photo illustration were all done by hand.`,
-      tags: ['InDesign', 'Photoshop', 'Illustrator', 'Editorial Design', 'Infographics', 'Writing'],
-      media: [
-        { type: 'img', src: 'assets/projects/school/kanye-p1.jpg', alt: 'Kanye Magazine — Cover' },
-        { type: 'img', src: 'assets/projects/school/kanye-p2.jpg', alt: 'Kanye Magazine — The Life of Ye' },
-        { type: 'img', src: 'assets/projects/school/kanye-p3.jpg', alt: 'Kanye Magazine — Early Career' },
-        { type: 'img', src: 'assets/projects/school/kanye-p4.jpg', alt: 'Kanye Magazine — Tragedy' },
-        { type: 'img', src: 'assets/projects/school/kanye-p5.jpg', alt: 'Kanye Magazine — Controversy' },
-        { type: 'img', src: 'assets/projects/school/kanye-p6.jpg', alt: 'Kanye Magazine — Rankings #10–6' },
-        { type: 'img', src: 'assets/projects/school/kanye-p7.jpg', alt: 'Kanye Magazine — Rankings #5–1' },
-      ]
-    },
-    'detroit-news': {
-      cat: 'Editorial Layout · Class Assignment',
-      title: 'The Detroit News — Print & Web Layout',
-      desc: `Two layout exercises recreating The Detroit News as both a print broadsheet and a web homepage. The print version works through multi-column grid structure, headline hierarchy, photo placement, and ad layout using real editorial content from March 2022. The web version adapts the same content to a digital format, with navigation, breaking news treatment, and subscriber-gated article patterns.`,
-      tags: ['InDesign', 'Photoshop', 'Editorial Layout', 'Newspaper Design', 'Web Layout'],
-      media: [
-        { type: 'img', src: 'assets/projects/school/detroit-news-print-p1.jpg', alt: 'Detroit News Print — Page 1' },
-        { type: 'img', src: 'assets/projects/school/detroit-news-print-p2.jpg', alt: 'Detroit News Print — Page 2' },
-        { type: 'img', src: 'assets/projects/school/detroit-news-web-p1.jpg', alt: 'Detroit News Web — Homepage' },
-        { type: 'img', src: 'assets/projects/school/detroit-news-web-p2.jpg', alt: 'Detroit News Web — Interior' },
-      ]
-    }
-  };
-
-  // ── Open modal
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const key = card.dataset.modal;
-      const data = modalData[key];
-      if (!data) return;
-
-      const mediaHtml = data.media.map(m => {
-        if (m.type === 'img') return `<img src="${m.src}" alt="${m.alt}" onclick="openLightbox('${m.src}')" />`;
-        if (m.type === 'video') return `<video controls><source src="${m.src}" /></video>`;
-        if (m.type === 'yt') return `<iframe class="iframe-embed" src="${m.src}" title="${m.title}" allowfullscreen></iframe>`;
-        if (m.type === 'pdf') return `<iframe src="${m.src}" class="pdf-embed" title="PDF viewer"></iframe>`;
-        return '';
-      }).join('');
-
-      const isMulti = data.media.length > 1;
-      const isPdf = data.media.length === 1 && data.media[0].type === 'pdf';
-      const gridClass = isPdf ? 'modal-media-single' : (isMulti ? 'modal-media-grid' : 'modal-media-single');
-
-      document.getElementById('modalInner').innerHTML = `
-        <div class="modal-media">
-          <div class="${gridClass}">${mediaHtml}</div>
-        </div>
-        <div class="modal-body">
-          <div class="modal-cat">${data.cat}</div>
-          <div class="modal-title">${data.title}</div>
-          <div class="modal-desc">${data.desc}</div>
-          <div class="modal-tags">${data.tags.map(t => `<span class="modal-tag">${t}</span>`).join('')}</div>
-          ${data.link ? `<a href="${data.link}" target="_blank" class="btn btn-red">${data.linkLabel || 'Visit Site'} →</a>` : ''}
-        </div>
-      `;
-
-      document.getElementById('modalOverlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  document.getElementById('modalClose').addEventListener('click', closeModal);
-  document.getElementById('modalOverlay').addEventListener('click', e => {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  });
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // ── Lightbox
-  function openLightbox(src) {
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightbox').classList.add('open');
-  }
-
-  document.getElementById('lightboxClose').addEventListener('click', () => {
-    document.getElementById('lightbox').classList.remove('open');
-  });
-
-  document.getElementById('lightbox').addEventListener('click', e => {
-    if (e.target === document.getElementById('lightbox')) {
-      document.getElementById('lightbox').classList.remove('open');
-    }
-  });
-
-  // ── Keyboard close
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      closeModal();
-      document.getElementById('lightbox').classList.remove('open');
-    }
   });
 </script>
 </body>
